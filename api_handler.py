@@ -1,3 +1,6 @@
+import io
+import zipfile
+
 import os
 import requests
 from dotenv import load_dotenv
@@ -31,7 +34,7 @@ def qualtrics_export():
 # Poll if download is ready
 def check_export_status(progress_id):
 
-    # Check progress
+    # Get progress web address
     url = f"https://{DATACENTER_ID}.qualtrics.com/API/v3/surveys/{SURVEY_ID}/export-responses/{progress_id}"
     headers = {"X-API-TOKEN": API_KEY}
 
@@ -40,3 +43,18 @@ def check_export_status(progress_id):
 
     # Return result dictionary giving fileId and progressId
     return response.json()['result']
+
+def download_qualtrics_file(file_id, export_dir="data"):
+
+    # Get web address
+    url = f"https://{DATACENTER_ID}.qualtrics.com/API/v3/surveys/{SURVEY_ID}/export-responses/{file_id}/file"
+    headers = {"X-API-TOKEN": API_KEY}
+
+    # Download the zipped data
+    response = requests.get(url, headers=headers, stream=True)
+
+    # Open the ZIP in memory and extract it to the /data folder
+    with zipfile.ZipFile(io.BytesIO(response.content)) as z:
+        z.extractall(export_dir)
+
+    print(f"File extracted to the '{export_dir}' folder.")

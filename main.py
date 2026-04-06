@@ -1,6 +1,6 @@
 import time
 from dotenv import load_dotenv
-from api_handler import qualtrics_export, check_export_status
+from api_handler import qualtrics_export, check_export_status, download_qualtrics_file
 
 load_dotenv()
 
@@ -36,6 +36,9 @@ def main():
 
     # Signal completion
     print(f"File is ready. File ID: {file_id}")
+
+    # Download and Unzip data
+    download_qualtrics_file(file_id)
 
 
 if __name__ == "__main__":
