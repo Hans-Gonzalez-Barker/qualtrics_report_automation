@@ -2,6 +2,29 @@ from fpdf import FPDF
 import os
 
 
+def clean_text(text):
+    """
+    Replaces Unicode 'smart' characters with standard PDF-safe equivalents.
+    """
+    if not isinstance(text, str):
+        return str(text)
+
+    # Replace common curly quotes and apostrophes
+    replacements = {
+        "\u2018": "'",  # Left single quote
+        "\u2019": "'",  # Right single quote
+        "\u201c": '"',  # Left double quote
+        "\u201d": '"',  # Right double quote
+        "\u2013": "-",  # En dash
+        "\u2014": "-",  # Em dash
+    }
+    for unicode_char, ascii_char in replacements.items():
+        text = text.replace(unicode_char, ascii_char)
+
+    # Encode to latin-1 and ignore anything that won't fit
+    return text.encode('latin-1', 'ignore').decode('latin-1')
+
+
 def generate_pdf_report(workshop_name, chart_path, enjoy_comments, change_comments, output_folder="reports"):
     """
     Assembles the feedback data into a styled PDF.
@@ -34,8 +57,9 @@ def generate_pdf_report(workshop_name, chart_path, enjoy_comments, change_commen
 
     pdf.set_font("Arial", '', 10)
     for comment in enjoy_comments:
-        # multi_cell allows text to wrap to the next line automatically
-        pdf.multi_cell(0, 6, f"- {comment}")
+        # We clean every comment before putting it in the PDF
+        cleaned_comment = clean_text(comment)
+        pdf.multi_cell(0, 6, f"- {cleaned_comment}")
         pdf.ln(2)
 
     pdf.ln(5)
@@ -46,7 +70,8 @@ def generate_pdf_report(workshop_name, chart_path, enjoy_comments, change_commen
 
     pdf.set_font("Arial", '', 10)
     for comment in change_comments:
-        pdf.multi_cell(0, 6, f"- {comment}")
+        cleaned_comment = clean_text(comment)
+        pdf.multi_cell(0, 6, f"- {cleaned_comment}")
         pdf.ln(2)
 
     # Export the final file
