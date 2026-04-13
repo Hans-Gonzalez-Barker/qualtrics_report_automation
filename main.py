@@ -1,9 +1,11 @@
 import time
 import glob
-import pandas as pd
+import os
 from dotenv import load_dotenv
 from api_handler import qualtrics_export, check_export_status, download_qualtrics_file
 from data_processing import load_and_clean_data, get_workshop_metrics
+from visualizer import create_bar_chart
+from report_generator import generate_pdf_report
 
 load_dotenv()
 
@@ -61,15 +63,20 @@ def main():
     workshops = df['Workshop'].unique()
 
     for workshop in workshops:
-        if pd.isna(workshop): continue
 
-        print(f"Processing metrics for: {workshop}")
+        # Defensive check: Skip null values (NaN) to prevent processing incomplete survey responses
+        # and avoid errors during PDF generation.
+        if os.environ.get("PANDAS_IS_NA", False) or str(workshop) == 'nan': continue
 
-        # Calculate scores and grab comments for this specific workshop
-        averages, enjoy_text, change_text = get_workshop_metrics(df, workshop)
+        print(f"Generating report for: {workshop}")
+        # Calculate metrics and get text
+        averages, enjoy, change = get_workshop_metrics(df, workshop)
+        # Create visual
+        chart_file = create_bar_chart(averages, workshop)
+        # Create PDF
+        report_file = generate_pdf_report(workshop, chart_file, enjoy, change)
 
-    print("All data processed. Visualizing...")
+        print(f"Saved: {report_file}")
 
-
-if __name__ == "__main__":
-    main()
+    if __name__ == "__main__":
+        main()
