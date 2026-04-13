@@ -15,6 +15,12 @@ SURVEY_ID = os.getenv("QUALTRICS_SURVEY_ID")
 
 # Get data from Qualtrics
 def qualtrics_export():
+    """
+        Begins the response export process in the Qualtrics API.
+
+        Returns:
+            str: A unique progressId used to track the status of the export job.
+    """
 
     # Use an f-string to build the web address
     url = f"https://{DATACENTER_ID}.qualtrics.com/API/v3/surveys/{SURVEY_ID}/export-responses/"
@@ -33,6 +39,16 @@ def qualtrics_export():
 
 # Poll if download is ready
 def check_export_status(progress_id):
+    """
+        Polls the Qualtrics API to check if the data export file is ready for download.
+
+        Args:
+            progress_id (str): The identifier for the specific export job.
+
+        Returns:
+            dict: A dictionary containing the 'status' and
+                  the 'fileId' once processing is finished.
+    """
 
     # Get progress web address
     url = f"https://{DATACENTER_ID}.qualtrics.com/API/v3/surveys/{SURVEY_ID}/export-responses/{progress_id}"
@@ -45,6 +61,17 @@ def check_export_status(progress_id):
     return response.json()['result']
 
 def download_qualtrics_file(file_id, export_dir="data"):
+    """
+        Downloads and extracts a survey response ZIP file from Qualtrics.
+
+        Args:
+            file_id (str): The unique file identifier provided by the Qualtrics API.
+            export_dir (str): The local directory where the CSV should be extracted.
+                              Defaults to "data".
+
+        Returns:
+            None: Extracts the file directly to the file system.
+    """
 
     # Get web address
     url = f"https://{DATACENTER_ID}.qualtrics.com/API/v3/surveys/{SURVEY_ID}/export-responses/{file_id}/file"

@@ -15,7 +15,17 @@ QUESTION_MAP = {
 
 def create_bar_chart(averages, workshop_name, output_folder="output"):
     """
-    Creates a horizontal bar chart and saves it as a PNG.
+        Generates a horizontal bar chart visualizing instructor agreement scores.
+
+        Saves the chart as a high-resolution PNG for inclusion in the PDF report.
+
+        Args:
+            averages (pandas.Series): Mean scores for the 7 Likert-scale questions.
+            workshop_name (str): The name of the workshop for the chart title.
+            output_folder (str): Directory to save the generated image.
+
+        Returns:
+            str: The file path to the saved chart image.
     """
     # Ensure the output directory exists
     if not os.path.exists(output_folder):

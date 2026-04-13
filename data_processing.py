@@ -2,6 +2,20 @@ import pandas as pd
 
 
 def load_and_clean_data(file_path):
+    """
+        Loads raw Qualtrics CSV data and performs initial cleaning and transformation.
+
+        This includes skipping metadata headers, consolidating 7-week and 14-week
+        workshop columns, mapping text-based Likert scales to integers (1-5),
+        and filtering for finished responses.
+
+        Args:
+            file_path (str): Path to the raw CSV file.
+
+        Returns:
+            pandas.DataFrame: A cleaned DataFrame ready for analysis.
+    """
+
     # Load CSV, skipping the two label rows Qualtrics adds (rows 1 and 2)
     df = pd.read_csv(file_path, skiprows=[1, 2])
 
@@ -31,7 +45,17 @@ def load_and_clean_data(file_path):
 
 
 def get_workshop_metrics(df, workshop_name):
-    """Calculates average scores for a specific workshop."""
+    """
+    Extracts quantitative averages and qualitative comments for a specific workshop.
+
+    Args:
+        df (pandas.DataFrame): The cleaned survey dataset.
+        workshop_name (str): The name of the workshop to filter by.
+
+    Returns:
+        tuple: (averages, enjoy_comments, change_comments) where averages is a Series
+               of mean scores, and comments are lists of strings.
+    """
     workshop_df = df[df['Workshop'] == workshop_name]
 
     # Calculate means for the 7 agreement questions
