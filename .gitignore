@@ -209,4 +209,5 @@ __marimo__/
 # Project Specific
 data/
 output/
+reports/
 .idea/

@@ -53,6 +53,9 @@ def download_qualtrics_file(file_id, export_dir="data"):
     # Download the zipped data
     response = requests.get(url, headers=headers, stream=True)
 
+    # Ensure data folder is created if not already
+    os.makedirs(export_dir, exist_ok=True)
+
     # Open the ZIP in memory and extract it to the /data folder
     with zipfile.ZipFile(io.BytesIO(response.content)) as z:
         z.extractall(export_dir)

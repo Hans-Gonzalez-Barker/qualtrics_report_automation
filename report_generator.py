@@ -6,8 +6,8 @@ def generate_pdf_report(workshop_name, chart_path, enjoy_comments, change_commen
     """
     Assembles the feedback data into a styled PDF.
     """
-    if not os.path.exists(output_folder):
-        os.makedirs(output_folder)
+    # Create a reports/ folder if not already there
+    os.makedirs("reports", exist_ok=True)
 
     # Initialize PDF (A4 size, units in millimeters)
     pdf = FPDF(orientation='P', unit='mm', format='A4')

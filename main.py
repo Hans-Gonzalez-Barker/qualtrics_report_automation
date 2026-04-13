@@ -78,5 +78,5 @@ def main():
 
         print(f"Saved: {report_file}")
 
-    if __name__ == "__main__":
-        main()
+if __name__ == "__main__":
+    main()
