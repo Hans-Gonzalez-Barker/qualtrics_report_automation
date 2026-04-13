@@ -39,7 +39,7 @@ qualtrics_report_automation/
 ## Setup & Usage
 * Clone the Repository:
 ```bash
-   git clone https://github.com/your-username/qualtrics-automation.git
+   git clone https://github.com/Hans-Gonzalez-Barker/qualtrics_report_automation
 ```
 * Install Dependencies:
 ```bash
