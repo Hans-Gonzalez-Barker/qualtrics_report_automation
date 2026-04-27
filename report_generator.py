@@ -58,7 +58,7 @@ def generate_pdf_report(workshop_name, chart_path, enjoy_comments, change_commen
 
     # Header / Title
     pdf.set_font("Arial", 'B', 16)
-    title = f"AU25 Instructor Feedback - {workshop_name}"
+    title = f"SP26 Instructor Feedback - {workshop_name}"
     pdf.cell(0, 10, title, ln=True, align='C')
     # Line break
     pdf.ln(5)
@@ -94,8 +94,8 @@ def generate_pdf_report(workshop_name, chart_path, enjoy_comments, change_commen
         pdf.ln(2)
 
     # Export the final file
-    safe_name = workshop_name.replace(" ", "_").replace("/", "-")
-    output_path = os.path.join(output_folder, f"Report_{safe_name}.pdf")
+    safe_name = workshop_name.replace("/", "-")
+    output_path = os.path.join(output_folder, f"{safe_name}.pdf")
     pdf.output(output_path)
 
     return output_path

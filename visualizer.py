@@ -67,8 +67,8 @@ def create_bar_chart(averages, workshop_name, output_folder="output"):
     plt.tight_layout()
 
     # Save the file with a unique name based on the workshop
-    safe_name = workshop_name.replace(" ", "_").replace("/", "-")
-    filepath = os.path.join(output_folder, f"chart_{safe_name}.png")
+    safe_name = workshop_name.replace("/", "-")
+    filepath = os.path.join(output_folder, f"{safe_name} Chart.png")
 
     # High resolution for PDF
     plt.savefig(filepath, dpi=300)
