@@ -53,6 +53,7 @@ qualtrics_report_automation/
    API token: Log into Qualtrics > Account Settings > API > Token
    Datacenter ID: Log into Qualtrics > Account Settings > User > Datacenter ID
    Survey ID: Look at your Qualtrics survey URL, should begin with /SV_ ...
+   Semester: Write the current semester. Example: "AU26"
 ```
 * Run the Pipeline:
 ```bash
