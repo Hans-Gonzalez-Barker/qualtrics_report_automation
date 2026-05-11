@@ -62,3 +62,7 @@ qualtrics_report_automation/
    A reports folder (along with data & output) should appear with all 
    PDF reports.
 ```
+
+## Example Report
+
+[Applied Marketing - Example Report - GitHub.pdf](https://github.com/user-attachments/files/27607301/Applied.Marketing.-.Example.Report.-.GitHub.pdf)
