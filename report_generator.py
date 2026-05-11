@@ -1,5 +1,10 @@
 from fpdf import FPDF
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+SEMESTER = os.getenv("SEMESTER")
 
 
 def clean_text(text):
@@ -58,7 +63,7 @@ def generate_pdf_report(workshop_name, chart_path, enjoy_comments, change_commen
 
     # Header / Title
     pdf.set_font("Arial", 'B', 16)
-    title = f"SP26 Instructor Feedback - {workshop_name}"
+    title = f"{SEMESTER} Instructor Feedback - {workshop_name}"
     pdf.cell(0, 10, title, ln=True, align='C')
     # Line break
     pdf.ln(5)
